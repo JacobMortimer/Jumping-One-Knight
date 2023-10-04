@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CalculateMaxHeight : MonoBehaviour
+{
+    private double maxHeight;
+    private double currentHeight;
+    private bool calculatingHeight;
+    private Transform playerTransform;
+
+    void Start()
+    {
+        // Assuming the player's starting position is the maximum height
+        maxHeight = transform.position.y;
+        calculatingHeight = true;
+        playerTransform = transform;
+    }
+
+    void Update()
+    {
+        if (calculatingHeight)
+        {
+            currentHeight = playerTransform.position.y;
+            // Update the maximum height if the player has gone higher
+            if (playerTransform.position.y > maxHeight)
+            {
+                maxHeight = playerTransform.position.y;
+            }
+        }
+        
+    }
+
+    public double GetMaxHeight()
+    {
+        return maxHeight + 4.9;
+    }
+
+    public void StopCalculatingHeight()
+    {
+        calculatingHeight = false;
+    }
+
+    public double GetCurrentHeight()
+    {
+        return currentHeight + 4.9;
+    }
+}
