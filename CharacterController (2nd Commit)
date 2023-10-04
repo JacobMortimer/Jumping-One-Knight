@@ -1,0 +1,82 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CharacterController2D : MonoBehaviour
+{
+    private float jumpForce = 18f;     // Force applied to jump
+    private float moveSpeed = 4f;
+    private float moveHorizontal;
+
+    private bool isGrounded = true;   // Is the character on the ground?
+    private float jumpTimer = 0f;     // Timer to track time on the ground
+
+    private Rigidbody2D rb;           // Reference to the character's Rigidbody2D component
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();  // Get the Rigidbody2D component of the character
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if character touches the ground
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            // Character is on the ground
+            isGrounded = true;
+        }
+    }
+
+    private void Update()
+    {
+        moveHorizontal = Input.GetAxisRaw("Horizontal");  // Gets horizontal input
+
+        if (isGrounded)
+        {
+            // Start counting the time since touching the ground
+            jumpTimer += Time.deltaTime;
+
+            if (jumpTimer >= 1f)
+            {
+                // Character jumps automatically after one second of touching the ground
+                Jump();  // Call the Jump function
+            }
+        }
+
+        if (isGrounded == false)  // Allows the character to move only when in the air
+        {
+            AirMove();
+        }
+    }
+
+    private void Jump()
+    {
+        // Apply vertical force to perform a jump
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+        // Character is no longer grounded
+        isGrounded = false;
+
+        // Reset the jump timer
+        jumpTimer = 0f;
+    }
+
+    private void AirMove()  // Moves the character when in the air
+   {
+        if (moveHorizontal > 0.1f || moveHorizontal < -0.1f)
+        {
+            rb.AddForce(new Vector2(moveHorizontal * moveSpeed, 0f));
+        }
+
+        if (moveHorizontal > 0.1f)
+        {
+            transform.localScale = new Vector2(10f, 10f);  // Makes the player face right when moving right
+        }
+
+        if (moveHorizontal < 0.1f)
+        {
+            transform.localScale = new Vector2(-10f, 10f); // Makes the player face left when moving left
+        }
+   }
+}
