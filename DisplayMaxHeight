@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+public class DisplayMaxHeightUI : MonoBehaviour
+{
+    public TextMeshProUGUI maxHeightText;
+    public TextMeshProUGUI currentHeightText;
+    public CalculateMaxHeight calculateMaxHeightScript;
+    
+
+
+    void Start()
+    {
+        if (calculateMaxHeightScript == null)
+        {
+            Debug.LogError("CalculateMaxHeight script reference is missing.");
+            return;
+        }
+
+        UpdateMaxHeightText();
+    }
+
+    void Update()
+    {
+        UpdateMaxHeightText();
+    }
+
+    void UpdateMaxHeightText()
+    {
+        if (calculateMaxHeightScript != null)
+        {
+            double maxHeight = calculateMaxHeightScript.GetMaxHeight();
+            maxHeightText.text = "Max Height: " + maxHeight.ToString("F2") + " meters";
+            double currentHeight = calculateMaxHeightScript.GetCurrentHeight();
+            currentHeightText.text = "Current Height: " + currentHeight.ToString("F2") + " meters";
+        }
+
+    }
+}
