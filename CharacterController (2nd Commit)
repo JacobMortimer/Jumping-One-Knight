@@ -28,7 +28,7 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         moveHorizontal = Input.GetAxisRaw("Horizontal");  // Gets horizontal input
 
