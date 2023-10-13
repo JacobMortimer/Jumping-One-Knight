@@ -22,7 +22,7 @@ public class DisplayMaxHeightUI : MonoBehaviour
         UpdateMaxHeightText();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UpdateMaxHeightText();
     }
