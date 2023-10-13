@@ -17,7 +17,7 @@ public class CalculateMaxHeight : MonoBehaviour
         playerTransform = transform;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (calculatingHeight)
         {
